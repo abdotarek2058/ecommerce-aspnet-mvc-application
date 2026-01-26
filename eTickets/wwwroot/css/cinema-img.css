@@ -1,0 +1,10 @@
+﻿.cinema-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    border: 2px solid #0dcaf0;
+    display: block;
+    margin: 0 auto;
+}

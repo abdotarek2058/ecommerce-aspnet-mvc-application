@@ -1,0 +1,49 @@
+﻿@model Actor
+@{
+    ViewData["Title"] = Model.FullName;
+}
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Details for @Model.FullName</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-6 offset-2">
+                
+                    <div class="mb-3 text-center">
+                        <img id="ProfilePicturePreview" class="border-info rounded-circle" style="max-width:170px;" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ProfilePictureURL" class="form-label"></label>
+                        <input asp-for="ProfilePictureURL" class="form-control" readonly />
+                        <span asp-validation-for="ProfilePictureURL" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label"></label>
+                        <input asp-for="FullName" class="form-control" readonly />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Bio" class="form-label"></label>
+                        <input asp-for="Bio" class="form-control" readonly/>
+                        <span asp-validation-for="Bio" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <a class="btn btn-outline-success float-end" asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pen-fill"></i>Edit</a>
+                        <a class="btn btn-outline-secondary" asp-action="Index">ShowAll</a>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $("#ProfilePictureURL").val();
+            output.style.width = "200px";
+            output.style.height = "170px";
+        })
+    </script>
+}

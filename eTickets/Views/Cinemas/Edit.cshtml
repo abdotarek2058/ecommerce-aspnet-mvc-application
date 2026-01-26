@@ -1,0 +1,68 @@
+﻿@model Cinema
+@{
+    ViewData["Title"] = Model.Name;
+}
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Update for @Model.Name</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-6 offset-2">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3 text-center">
+                        <img id="CinemaLogoPreview" class="border-info rounded-circle" style="display:none; border:1px solid #ccc;  margin: 0 auto;" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Logo" class="form-label"></label>
+                        <input asp-for="Logo" class="form-control" />
+                        <span asp-validation-for="Logo" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" value="Update" class="btn btn-outline-success float-end" />
+
+                        <a class="btn btn-outline-secondary" asp-action="Index">ShowAll</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        function updateImagePreview(url) {
+            var output = document.getElementById('CinemaLogoPreview');
+
+            if (url && url.trim() !== "") {
+                output.src = url;
+                output.style.width = "200px";
+                output.style.height = "170px";
+                output.style.display = "block";
+            } else {
+                output.src = "";
+                output.style.display = "none";
+            }
+        }
+
+        $(document).ready(function () {
+            updateImagePreview($("#Logo").val());
+
+            $("#Logo").on("change", function () {
+                updateImagePreview($(this).val());
+            });
+        });
+    </script>
+}
