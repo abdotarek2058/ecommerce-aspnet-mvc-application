@@ -24,7 +24,6 @@ namespace IMDB.Data.Base
             return await query.ToListAsync();
 
         }
-
         public async Task<T> GetByIdAsync(int id) => await _context.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
         public async Task<T> GetByIdAsync(int id, params Expression<Func<T, object>>[] includeProperties)
         {

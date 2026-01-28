@@ -1,5 +1,6 @@
 ﻿using IMDB.Data.Base;
 using IMDB.Data.Enums;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IMDB.Models
@@ -18,12 +19,15 @@ namespace IMDB.Models
         // Cinema
         public int CinemaId { get; set; }
         [ForeignKey("CinemaId")]
+        //[ValidateNever]
         public Cinema Cinema { get; set; }
         // Producer
         public int ProducerId { get; set; }
         [ForeignKey("ProducerId")]
+        //[ValidateNever]
         public Producer Producer { get; set; }
         // Actors
+        //[ValidateNever]
         public List<Actor_Movie> Actors_Movies { get; set; }
     }
 }
