@@ -1,11 +1,14 @@
 ﻿using IMDB.Data;
 using IMDB.Data.Services;
+using IMDB.Data.Static;
 using IMDB.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace IMDB.Controllers
 {
+    [Authorize(Roles =UserRoles.Admin)]
     public class ActorsController : Controller
     {
         private readonly IActorsService _service;
@@ -13,6 +16,7 @@ namespace IMDB.Controllers
         {
             _service = service;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var actors = await _service.GetAllAsync();
@@ -33,7 +37,9 @@ namespace IMDB.Controllers
             await _service.AddAsync(actor);
             return RedirectToAction(nameof(Index));
         }
+
         //get: Actors/Details/1
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var actorDetails = await _service.GetByIdAsync(id);

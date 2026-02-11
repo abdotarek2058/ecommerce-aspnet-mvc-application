@@ -1,5 +1,7 @@
 using IMDB.Data;
 using IMDB.Data.Services;
+using IMDB.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace IMDB
@@ -14,6 +16,14 @@ namespace IMDB
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options=> {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 1;
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
             //services configuration
             builder.Services.AddScoped<IActorsService,Actorsservice>();
@@ -33,13 +43,13 @@ namespace IMDB
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Movies}/{action=Index}/{id?}")
+                pattern: "{controller=Account}/{action=Login}/{id?}")
                 .WithStaticAssets();
 
             //seed database

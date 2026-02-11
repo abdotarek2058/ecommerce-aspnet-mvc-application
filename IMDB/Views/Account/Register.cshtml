@@ -1,0 +1,52 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>IMDB Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/auth.css" />
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <div class="login-card">
+            <h2 class="title">🎬 IMDB Register</h2>
+            <p class="subtitle">Create an account to continue</p>
+
+            <form method="post">
+                <div class="input-group">
+                    <input type="text" name="FullName" placeholder="Full Name" required />
+                </div>
+
+                <div class="input-group">
+                    <input type="email" name="Email" placeholder="Email Address" required />
+                </div>
+
+                <div class="input-group">
+                    <input type="password" name="Password" placeholder="Password" required />
+                </div>
+
+                <div class="input-group">
+                    <input type="password" name="ConfirmPassword" placeholder="Confirm Password" required />
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <span>Register</span>
+                </button>
+
+                <p class="register-text">
+                    Already have an account?
+                    <a href="/Account/Login">Login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

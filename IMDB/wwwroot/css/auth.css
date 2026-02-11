@@ -1,0 +1,216 @@
+﻿/* ===============================
+   Global
+================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: url("/images/login-bg.jpg") no-repeat center center / cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+    /* Overlay */
+    body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.75);
+    }
+
+/* ===============================
+   Wrapper
+================================ */
+.login-wrapper {
+    position: relative;
+    z-index: 2;
+}
+
+/* ===============================
+   Card
+================================ */
+.login-card {
+    width: 380px;
+    padding: 35px;
+    background: rgba(20, 20, 20, 0.85);
+    border-radius: 15px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+    animation: popIn 0.9s ease forwards;
+}
+
+/* ===============================
+   Titles
+================================ */
+.title {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 25px;
+}
+
+/* ===============================
+   Inputs
+================================ */
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    background: #1f1f1f;
+    color: #fff;
+}
+
+    .input-group input::placeholder {
+        color: #aaa;
+    }
+
+.login-card input:focus {
+    border: 1px solid #ff2c2c;
+    box-shadow: 0 0 12px rgba(255, 44, 44, 0.5);
+    transition: 0.3s;
+}
+
+/* ===============================
+   Login Button (Primary)
+================================ */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #e50914;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+    .login-btn:hover {
+        background: #ff1e1e;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+        transform: translateY(-2px);
+    }
+
+    .login-btn:active span {
+        opacity: 0.6;
+    }
+
+/* ===============================
+   Register / Login Text
+================================ */
+.register-text {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+    .register-text a {
+        color: #e50914;
+        text-decoration: none;
+    }
+
+/* ===============================
+   Divider
+================================ */
+.divider {
+    margin: 20px 0;
+    position: relative;
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+}
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 40%;
+        height: 1px;
+        background: #444;
+    }
+
+    .divider::before {
+        left: 0;
+    }
+
+    .divider::after {
+        right: 0;
+    }
+
+/* ===============================
+   Social Login Buttons
+================================ */
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.social-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #fff;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+    .social-btn:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
+
+/* Platforms */
+.facebook {
+    background: #1877f2;
+}
+
+.google {
+    background: #db4437;
+}
+
+.twitter {
+    background: #1da1f2;
+}
+
+.github {
+    background: #333;
+}
+
+/* ===============================
+   Animations
+================================ */
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
