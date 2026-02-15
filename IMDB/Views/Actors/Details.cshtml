@@ -29,7 +29,11 @@
                         <span asp-validation-for="Bio" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
+                    @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
                         <a class="btn btn-outline-success float-end" asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pen-fill"></i>Edit</a>
+                    }
+
                         <a class="btn btn-outline-secondary" asp-action="Index">ShowAll</a>
                     </div>
                 

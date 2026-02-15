@@ -49,11 +49,12 @@ namespace IMDB
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Account}/{action=Login}/{id?}")
+                pattern: "{controller=Movies}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
             //seed database
             AppDbIntializer.Seed(app);
+            AppDbIntializer.SeedUsersAndRolesAsync(app).Wait();
             app.Run();
         }
     }

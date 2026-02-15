@@ -1,8 +1,11 @@
 ﻿using IMDB.Data;
+using IMDB.Data.Static;
 using IMDB.Data.ViewModel;
 using IMDB.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace IMDB.Controllers
 {
@@ -18,6 +21,105 @@ namespace IMDB.Controllers
             _context = context;
 
         }
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task <IActionResult> Users()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return View(users);
+        }
+        [Authorize]
+        public async Task<IActionResult> Profile()
+        {
+            var user =await _userManager.GetUserAsync(User);
+            var model = new ProfileVM()
+            {
+                FullName = user.FullName
+            };
+            return View(model);
+        }
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Profile(ProfileVM model) 
+        { 
+            var user = await _userManager.GetUserAsync(User);
+            if(!ModelState.IsValid)
+                return View(model);
+            // تحديث الاسم
+            user.FullName = model.FullName;
+            await _userManager.UpdateAsync(user);
+
+            if (!string.IsNullOrEmpty(model.NewPassword))
+            {
+                var result = await _userManager.ChangePasswordAsync(
+                    user,
+                    model.CurrentPassword,
+                    model.NewPassword
+                    );
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                        ModelState.AddModelError("", error.Description);
+                    return View(model);
+                }
+            }
+            ViewBag.Success = "Profile updated successfully";
+            return View(model);
+        }
+        [Authorize(Roles = UserRoles.Admin)]
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Users");
+            }
+            return BadRequest();
+        }
+        [Authorize(Roles = UserRoles.Admin)]
+        [HttpPost]
+        public async Task<IActionResult> ChangeRole(string id, string role)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+
+            // منع تعديل الأدمن الرئيسي
+            if (user.Email == "admin@imdb.com")
+                return BadRequest("Cannot modify main admin");
+
+            // إزالة كل الأدوار الحالية
+            var roles = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRolesAsync(user, roles);
+
+            // إضافة الدور المختار
+            var result = await _userManager.AddToRoleAsync(user, role);
+
+            if (result.Succeeded)
+                return RedirectToAction("Users");
+
+            return BadRequest();
+        }
+
+        //public async Task<IActionResult> PromoteToAdmin(string id)
+        //{
+        //    var user = await _userManager.FindByIdAsync(id);
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var result = await _userManager.AddToRoleAsync(user, UserRoles.Admin);
+        //    if (result.Succeeded)
+        //    {
+        //        return RedirectToAction("User");
+        //    }
+        //    return BadRequest();
+        //}
         public IActionResult Login()
         {
             return View();
@@ -78,5 +180,6 @@ namespace IMDB.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
+
     }
 }
