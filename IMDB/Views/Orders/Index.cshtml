@@ -1,0 +1,102 @@
+﻿@model List<Order>
+
+@{
+    ViewData["Title"] = "All orders";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>List of all your orders</h4>
+        </p>
+
+        <table class="table">
+            <thead class="text-center">
+                <tr>
+                    <th>Orders ID</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                    @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <th>User</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var order in Model)
+                {
+                    <tr>
+                        <td class="align-middle text-center">@order.Id</td>
+                        <td class="align-middle text-center">
+                            <ul style="list-style-type:none">
+                                @foreach(var item in order.OrderItems)
+                                {
+                                    <li>
+                                        <div class="alert-info" role="alert">
+                                            <span class="badge bg-success">@item.Amount</span> [@item.Price.ToString("c")] - @item.Movie.Name
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+
+                        <td class="align-middle text-center">
+                            @order.OrderItems.Select(m=>m.Movie.Price * m.Amount).Sum().ToString("c")
+                        </td>
+                        <td class="align-middle text-center">
+                            @order.OrderDate.ToLocalTime().ToString("dd MMM yyyy - hh:mm tt", System.Globalization.CultureInfo.InvariantCulture)
+                        </td>
+                        <!-- Status -->
+                        <td class="align-middle text-center">
+
+                            @if (order.OrderStatus == "Pending")
+                            {
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            }
+                            else if (order.OrderStatus == "Cancelled")
+                            {
+                                <span class="badge bg-danger">Cancelled</span>
+                            }
+                            else if (order.OrderStatus == "Completed")
+                            {
+                                <span class="badge bg-success">Completed</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Unknown</span>
+                            }
+
+                        </td>
+
+                        <!-- Action -->
+                        <td class="align-middle text-center">
+
+                            @if (order.OrderStatus == "Pending")
+                            {
+                                <a class="btn btn-danger btn-sm"
+                                   asp-controller="Orders"
+                                   asp-action="CancelOrder"
+                                   asp-route-id="@order.Id">
+                                    Cancel
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="text-muted">-</span>
+                            }
+
+                        </td>
+                        @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <td class="align-middle text-center"> @order.User.FullName</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

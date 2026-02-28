@@ -1,8 +1,10 @@
 using IMDB.Data;
+using IMDB.Data.Cart;
 using IMDB.Data.Services;
 using IMDB.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IMDB
 {
@@ -30,6 +32,13 @@ namespace IMDB
             builder.Services.AddScoped<IProducersService,ProducersService>();
             builder.Services.AddScoped<ICinemasService,CinemasService>();
             builder.Services.AddScoped<IMoviesService,MoviesService>();
+            builder.Services.AddScoped<IOrdersService, OrdersService>();
+
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddMemoryCache();
+            builder.Services.AddSession();
+
+            builder.Services.AddScoped<ShoppingCart>(Sp => ShoppingCart.GetShoppingCart(Sp));
 
             var app = builder.Build();
 
@@ -42,9 +51,12 @@ namespace IMDB
             }
 
             app.UseHttpsRedirection();
+            
             app.UseRouting();
+            app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();
+           
 
             app.MapStaticAssets();
             app.MapControllerRoute(

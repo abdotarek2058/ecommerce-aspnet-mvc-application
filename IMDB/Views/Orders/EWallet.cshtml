@@ -1,0 +1,44 @@
+﻿@model EWalletVM
+@{
+    ViewData["Title"] = "E-Wallet Payment";
+}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+
+        <div class="card shadow p-4">
+
+            <h4 class="text-center mb-3">E-Wallet Payment</h4>
+
+            <form asp-action="ConfirmEWallet">
+
+                <div class="mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <input asp-for="PhoneNumber" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Provider</label>
+                    <select asp-for="Provider" class="form-select" required>
+                        <option value="">Select provider</option>
+                        <option value="Vodafone">Vodafone Cash</option>
+                        <option value="Orange">Orange Money</option>
+                        <option value="Etisalat">Etisalat Cash</option>
+                        <option value="WE">WE Pay</option>
+                    </select>
+                </div>
+
+                <div class="mb-3 text-center">
+                    <h5>Total: @Model.Total.ToString("c")</h5>
+                </div>
+
+                <button class="btn btn-success w-100 rounded-pill">
+                    Confirm Payment
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>

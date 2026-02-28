@@ -13,5 +13,11 @@ namespace IMDB.Models
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
         public List <OrderItem> OrderItems { get; set; }
+        public string PaymentMethod { get; set; }
+
+        public string PaymentStatus { get; set; }
+
+        public DateTime OrderDate { get; set; }
+        public string OrderStatus { get; set; }
     }
 }

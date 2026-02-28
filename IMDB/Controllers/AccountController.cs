@@ -137,7 +137,7 @@ namespace IMDB.Controllers
                 ModelState.AddModelError("", "Invalid login attempt");
                 return View(model);
             }
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password,false,false);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password,model.RememberMe,false);
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Movies");
