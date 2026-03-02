@@ -20,11 +20,13 @@ namespace IMDB
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options=> {
-                options.Password.RequireDigit = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequiredLength = 1;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+               
+                options.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
             //services configuration

@@ -64,10 +64,14 @@ body {
 /* ===============================
    Inputs
 ================================ */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
 .input-group input {
     width: 100%;
     padding: 12px;
-    margin-bottom: 15px;
     border-radius: 8px;
     border: none;
     outline: none;
@@ -75,9 +79,9 @@ body {
     color: #fff;
 }
 
-    .input-group input::placeholder {
-        color: #aaa;
-    }
+.input-group input::placeholder {
+    color: #aaa;
+}
 
 .login-card input:focus {
     border: 1px solid #ff2c2c;
@@ -199,6 +203,169 @@ body {
 .github {
     background: #333;
 }
+/* رسائل الخطأ */
+.text-danger {
+    color: #ff4d4d !important;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* لما يحصل خطأ في input */
+.input-validation-error {
+    border: 1px solid #ff3b3b !important;
+    background: rgba(255, 0, 0, 0.08);
+    animation: shake 0.25s;
+}
+.field-validation-error {
+    color: #ff3b3b;
+    font-size: 12px;
+    margin-top: 6px;
+    text-align: left;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.validation-summary-errors {
+    color: #ff3b3b;
+    margin-bottom: 15px;
+    text-align: left;
+}
+.validation-summary {
+    background: rgba(255, 0, 0, 0.1);
+    border: 1px solid #ff3b3b;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: left;
+    font-size: 13px;
+}
+/*تعديلات الباسورد*/
+.password-group {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #aaa;
+    user-select: none;
+}
+
+.toggle-password:hover {
+    color: #fff;
+
+}
+.strength-meter {
+    width: 100%;
+    height: 6px;
+    background: #333;
+    border-radius: 5px;
+    margin-top: 8px;
+    opacity: 0;
+    transform: scaleX(0.9);
+    transform-origin: left;
+    transition: all 0.3s ease;
+}
+.strength-meter.show {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 5px;
+    transition: all  0.3s ease;
+}
+
+.strength-text {
+    font-size: 11px;
+    display: block;
+    text-align: left;
+    margin-top: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.strength-text.show {
+    opacity: 1;
+}
+.strength-bar.strong-glow {
+    box-shadow: 0 0 10px limegreen;
+}
+
+/* Confirm Match */
+.confirm-text {
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.confirm-text.show {
+     opacity: 1;
+}
+
+.match-success {
+    color: limegreen;
+}
+
+.match-error {
+    color: #ff4d4d;
+}
+
+.input-error {
+    border: 1px solid #ff3b3b !important;
+    animation: shake 0.25s;
+}
+
+.input-success {
+    border: 1px solid limegreen !important;
+}
+/*floationg labels (Netflex style)*/
+.floating-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.floating-group input {
+    width: 100%;
+    padding: 14px 10px 6px 10px;
+    background: #1f1f1f;
+    border-radius: 8px;
+    border: none;
+    color: #fff;
+}
+.floating-group input:focus {
+    border: 1px solid #ff2c2c;
+    box-shadow: 0 0 12px rgba(255, 44, 44, 0.5);
+    
+}
+.floating-group label {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    color: #aaa;
+    font-size: 14px;
+    transition: 0.2s;
+    pointer-events: none;
+}
+
+.floating-group input:focus + label,
+.floating-group input:not(:placeholder-shown) + label {
+    top: 4px;
+    font-size: 11px;
+    color: #aaa; /* اللون الطبيعي */
+}
+
+ /* اللون الأحمر بس لو فيه Error */
+.floating-group input.input-validation-error + label {
+    color: #ff3b3b;
+}
+
 
 /* ===============================
    Animations
@@ -212,5 +379,38 @@ body {
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-3px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-4px);
+    }
+
+    50% {
+        transform: translateX(4px);
+    }
+
+    75% {
+        transform: translateX(-4px);
+    }
+
+    100% {
+        transform: translateX(0);
     }
 }

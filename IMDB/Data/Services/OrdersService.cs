@@ -12,11 +12,11 @@ namespace IMDB.Data.Services
         }
         public async Task<List<Order>> GetOrderByUserIdAndRoleAsync(string userId, string userRole)
         {
-            var orders = _context.Orders.Include(n=>n.OrderItems).ThenInclude(n=>n.Movie).Include(n=>n.User).AsQueryable();
+            var orders = _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Movie).Include(n => n.User).AsQueryable();
 
-            if(userRole != "Admin")
+            if (userRole != "Admin")
             {
-                orders = orders.Where(n=>n.UserId == userId);
+                orders = orders.Where(n => n.UserId == userId);
             }
 
             return await orders.ToListAsync();
@@ -62,7 +62,22 @@ namespace IMDB.Data.Services
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<Order> GetOrderByIdAsync(int orderId)=> await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
-        
+        public async Task<Order> GetOrderByIdAsync(int orderId) => await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+
+        //public async Task DeleteOrdersByUserIdAsync(string  userId)
+        //{
+        //    var orders = await _context.Orders.Where(o=>o.UserId == userId).ToListAsync();
+        //    foreach (var order in orders)
+        //    {
+        //        var orderItems = await _context.OrderItems
+        //            .Where(oi => oi.OrderId == order.Id)
+        //            .ToListAsync();
+
+        //        _context.OrderItems.RemoveRange(orderItems);
+        //    }
+        //    _context.Orders.RemoveRange(orders);
+        //    await _context.SaveChangesAsync();
+        //}
+
     }
 }

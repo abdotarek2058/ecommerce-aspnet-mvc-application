@@ -19,6 +19,18 @@ namespace IMDB.Data
                 });
             modelBuilder.Entity<Actor_Movie>().HasOne(m => m.Movie).WithMany(am => am.Actors_Movies).HasForeignKey(m => m.MovieId);
             modelBuilder.Entity<Actor_Movie>().HasOne(a => a.Actor).WithMany(am => am.Actors_Movies).HasForeignKey(a => a.ActorId);
+            
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(m => m.Order).WithMany(o=>o.OrderItems)
+                .HasForeignKey(oi => oi.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(u=>u.User)
+                .WithMany()
+                .HasForeignKey(o=>o.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Actor> Actors { get; set; }

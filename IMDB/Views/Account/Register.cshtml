@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Register
+@{
     Layout = null;
 }
 
@@ -19,21 +20,35 @@
             <h2 class="title">🎬 IMDB Register</h2>
             <p class="subtitle">Create an account to continue</p>
 
-            <form method="post">
+            
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <form asp-action="Register"  method="post">
                 <div class="input-group">
-                    <input type="text" name="FullName" placeholder="Full Name" required />
+                    <input asp-for="FullName" placeholder="Full Name"  />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
                 </div>
 
                 <div class="input-group">
-                    <input type="email" name="Email" placeholder="Email Address" required />
+                    <input asp-for="Email" placeholder="Email Address" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
-                <div class="input-group">
-                    <input type="password" name="Password" placeholder="Password" required />
+                <div class="input-group password-group">
+                    <input asp-for="Password" type="password" placeholder="Password" />
+                    <span class="toggle-password">👁</span>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <div class="strength-meter">
+                        <div class="strength-bar"></div>
+                    </div>
+                    <small class="strength-text"></small>
                 </div>
+              
 
-                <div class="input-group">
-                    <input type="password" name="ConfirmPassword" placeholder="Confirm Password" required />
+                <div class="input-group password-group" >
+                    <input asp-for="ConfirmPassword" type="password" placeholder="Confirm Password" />
+                    <span class="toggle-password">👁</span>
+                    <small class="confirm-text"></small>
                 </div>
 
                 <button type="submit" class="login-btn">
@@ -47,6 +62,11 @@
             </form>
         </div>
     </div>
-
+    
+    
+    <script src="~/js/auth.js" asp-append-version="true"></script>
+    <!-- 🔥 مهم جدًا لتشغيل Client Validation -->
+    <partial name="_ValidationScriptsPartial" />
 </body>
 </html>
+

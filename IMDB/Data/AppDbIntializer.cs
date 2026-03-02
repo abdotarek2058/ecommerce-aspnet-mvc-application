@@ -366,25 +366,35 @@ namespace IMDB.Data
                     Email = adminUserEmail,
                     EmailConfirmed = true
                 };
-
-                await userManager.CreateAsync(newAdminUser, "abdo@1232001");
-                await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
+                var createResult = await userManager.CreateAsync(newAdminUser, "Abdo@1232001");
+                if (createResult.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
+                }
+            }
+            else
+            {
+                // لو الأدمن موجود بس مش في Role Admin
+                if (!await userManager.IsInRoleAsync(adminUser, UserRoles.Admin))
+                {
+                    await userManager.AddToRoleAsync(adminUser, UserRoles.Admin);
+                }
             }
             // Create regular user
-            string appUserEmail = "user@imdb.com";
+            //string appUserEmail = "user@imdb.com";
 
-            var appUser = await userManager.FindByEmailAsync(appUserEmail);
-            if (appUser == null) { 
-                var newAppUser = new ApplicationUser()
-                {
-                    FullName = "Application User",
-                    UserName = "app-user",
-                    Email = appUserEmail,
-                    EmailConfirmed = true
-                };
-                await userManager.CreateAsync(newAppUser, "abdo@1232001");
-                await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
-            }
+            //var appUser = await userManager.FindByEmailAsync(appUserEmail);
+            //if (appUser == null) { 
+            //    var newAppUser = new ApplicationUser()
+            //    {
+            //        FullName = "Application User",
+            //        UserName = "app-user",
+            //        Email = appUserEmail,
+            //        EmailConfirmed = true
+            //    };
+            //    await userManager.CreateAsync(newAppUser, "Abdo@1232001");
+            //    await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
+            //}
         }
     }
 }

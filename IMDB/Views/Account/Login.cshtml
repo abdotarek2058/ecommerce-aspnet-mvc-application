@@ -22,13 +22,19 @@
             <h2 class="title">🎬 IMDB Login</h2>
             <p class="subtitle">Login to continue</p>
 
-            <form method="post">
-                <div class="input-group">
-                    <input asp-for="UserName" type="text" placeholder="Username or Email" />
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <form asp-action="Login" method="post">
+                <div class="floating-group">
+                    <input asp-for="UserName" placeholder=" " required />
+                    <label asp-for="UserName"></label>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
 
-                <div class="input-group">
+                <div class="input-group password-group">
                     <input asp-for="Password" type="password" placeholder="Password" />
+                    <span class="toggle-password">👁</span>
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-check text-start mt-2">
                     <input asp-for="RememberMe" class="form-check-input" />
@@ -72,6 +78,9 @@
             </form>
         </div>
     </div>
+    <script src="~/js/auth.js" asp-append-version="true"></script>
+    <partial name="_ValidationScriptsPartial" />
 
 </body>
 </html>
+

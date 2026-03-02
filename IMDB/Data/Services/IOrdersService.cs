@@ -8,5 +8,6 @@ namespace IMDB.Data.Services
         Task<List<Order>> GetOrderByUserIdAndRoleAsync(string userId, string userRole);
         Task CancelOrderAsync(int orderId);
         Task<Order> GetOrderByIdAsync(int orderId);
+        //Task  DeleteOrdersByUserIdAsync(string userId);
     }
 }

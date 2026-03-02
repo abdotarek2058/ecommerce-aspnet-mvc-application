@@ -1,4 +1,5 @@
 ﻿using IMDB.Data;
+using IMDB.Data.Services;
 using IMDB.Data.Static;
 using IMDB.Data.ViewModel;
 using IMDB.Models;
@@ -14,11 +15,12 @@ namespace IMDB.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly AppDbContext _context;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager , AppDbContext context)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager , AppDbContext context )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            
 
         }
         [Authorize(Roles = UserRoles.Admin)]
@@ -74,6 +76,9 @@ namespace IMDB.Controllers
             {
                 return NotFound();
             }
+
+           
+
             var result = await _userManager.DeleteAsync(user);
             if (result.Succeeded)
             {
